@@ -1,76 +1,83 @@
 import { formatMoney } from "@/lib/utils";
-import { Job } from "@prisma/client";
+import { Post } from "@prisma/client";
 import { Banknote, Briefcase, Globe2, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Markdown from "./Markdown";
 
 interface JobPageProps {
-  job: Job;
+  post: Post;
 }
 
 export default function JobPage({
-  job: {
-    title,
-    description,
-    companyName,
-    applicationUrl,
-    type,
-    locationType,
-    location,
-    salary,
-    companyLogoUrl,
-  },
+  post: { title, description },
 }: JobPageProps) {
   return (
-    <section className="w-full grow space-y-5">
-      <div className="flex items-center gap-3">
-        {companyLogoUrl && (
-          <Image
-            src={companyLogoUrl}
-            alt="Company logo"
-            width={100}
-            height={100}
-            className="rounded-xl"
-          />
-        )}
-        <div>
-          <div>
-            <h1 className="text-xl font-bold">{title}</h1>
-            <p className="font-semibold">
-              {applicationUrl ? (
-                <Link
-                  href={new URL(applicationUrl).origin}
-                  className="text-green-500 hover:underline"
-                >
-                  {companyName}
-                </Link>
-              ) : (
-                <span>{companyName}</span>
-              )}
-            </p>
+    <section className="space-y-24">
+      {/* <div className="space-y-24"> */}
+      <div className="mx-auto max-w-3xl 2xl:max-w-6xl">
+        <h1 className="font-display text-balance text-3xl uppercase text-black dark:text-white lg:text-3xl 2xl:text-6xl">
+          {title}
+        </h1>
+        <section>
+          <div className="mx-auto max-w-3xl text-black dark:text-white 2xl:max-w-6xl">
+            <div className="relative mx-auto overflow-hidden overflow-x-hidden py-2">
+              <div className="grid w-full justify-between">
+                <div className="absolute inset-0 left-0 z-10 w-44 bg-gradient-to-r from-white via-transparent dark:from-black" />
+                <div className="absolute inset-0 left-0 z-10 ml-auto w-44 bg-gradient-to-l from-white via-transparent dark:from-black" />
+              </div>
+              {/* <div className="animate-marquee font-display relative flex items-center gap-4 whitespace-nowrap font-black uppercase tracking-widest">
+                          I am a marquee
+                          <span className="hidden lg:inline">✽</span>I am a
+                          marquee <span className="hidden lg:inline">✽</span> I
+                          am a marquee
+                          <span className="hidden lg:inline">✽</span> I am a
+                          marquee <span className="hidden lg:inline">✽</span>I
+                          am a marquee
+                          <span className="hidden lg:inline">✽</span> I am a
+                          marquee <span className="hidden lg:inline">✽</span> I
+                          am a marquee
+                          <span className="hidden lg:inline">✽</span>I am a
+                          marquee <span className="hidden lg:inline">✽</span> I
+                          am a marquee
+                          <span className="hidden lg:inline">✽</span> I am a
+                          marquee
+                        </div> */}
+            </div>
           </div>
-          <div className="text-muted-foreground">
-            <p className="flex items-center gap-1.5">
-              <Briefcase size={16} className="shrink-0" />
-              {type}
-            </p>
-            <p className="flex items-center gap-1.5">
-              <MapPin size={16} className="shrink-0" />
-              {locationType}
-            </p>
-            <p className="flex items-center gap-1.5">
-              <Globe2 size={16} className="shrink-0" />
-              {location || "Worldwide"}
-            </p>
-            <p className="flex items-center gap-1.5">
-              <Banknote size={16} className="shrink-0" />
-              {formatMoney(salary)}
-            </p>
+          <div className="mx-auto mt-6 max-w-3xl space-y-6 text-zinc-500 dark:text-zinc-400 2xl:max-w-6xl">
+            <Markdown>{description}</Markdown>
+
+            <div className="mt-12 inline-flex items-center gap-3" role="list">
+              <a
+                href="#_"
+                title="link to your page"
+                aria-label="your label"
+                className="dark:hiver:text-white/70 flex text-sm tracking-wide text-black duration-200 hover:text-black/70 dark:text-white"
+              >
+                Twitter
+              </a>
+              <a
+                href="#_"
+                title="link to your page"
+                aria-label="your label"
+                className="dark:hiver:text-white/70 flex text-sm tracking-wide text-black duration-200 hover:text-black/70 dark:text-white"
+              >
+                Dribbble
+              </a>
+              <a
+                href="#_"
+                title="link to your page"
+                aria-label="your label"
+                className="dark:hiver:text-white/70 flex text-sm tracking-wide text-black duration-200 hover:text-black/70 dark:text-white"
+              >
+                Email
+              </a>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
-      <div>{description && <Markdown>{description}</Markdown>}</div>
+      {/* <div>{description}</div> */}
     </section>
   );
 }

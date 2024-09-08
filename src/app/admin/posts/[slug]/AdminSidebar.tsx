@@ -1,13 +1,14 @@
 "use client";
 
 import FormSubmitButton from "@/components/FormSubmitButton";
-import { Job } from "@prisma/client";
+import { Post } from "@prisma/client";
 import { useFormState } from "react-dom";
 import { approveSubmission, deleteJob } from "./actions";
 
 interface AdminSidebarProps {
-  job: Job;
+  job: Post;
 }
+
 
 export default function AdminSidebar({ job }: AdminSidebarProps) {
   return (
@@ -43,6 +44,7 @@ function ApproveSubmissionButton({ jobId }: AdminButtonProps) {
     </form>
   );
 }
+
 
 function DeleteJobButton({ jobId }: AdminButtonProps) {
   const [formState, formAction] = useFormState(deleteJob, undefined);

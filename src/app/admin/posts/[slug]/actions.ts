@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 
 type FormState = { error?: string } | undefined;
 
+
 export async function approveSubmission(
   prevState: FormState,
   formData: FormData,
@@ -22,7 +23,7 @@ export async function approveSubmission(
       throw new Error("Not authorized");
     }
 
-    await prisma.job.update({
+    await prisma.post.update({
       where: { id: jobId },
       data: { approved: true },
     });
@@ -50,18 +51,19 @@ export async function deleteJob(
       throw new Error("Not authorized");
     }
 
-    const job = await prisma.job.findUnique({
+    const job = await prisma.post.findUnique({
       where: { id: jobId },
     });
 
-    if (job?.companyLogoUrl) {
-      await del(job.companyLogoUrl);
-    }
+    // if (job?.companyLogoUrl) {
+    //   await del(job.companyLogoUrl);
+    // }
 
-    await prisma.job.delete({
+    await prisma.post.delete({
       where: { id: jobId },
     });
 
+    
     revalidatePath("/");
   } catch (error) {
     let message = "Unexpected error";

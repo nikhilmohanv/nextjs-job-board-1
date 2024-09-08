@@ -12,22 +12,17 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model Job {
-  id               Int      @id @default(autoincrement())
-  slug             String   @unique
-  title            String
-  type             String
-  locationType     String
-  location         String?
-  description      String?
-  salary           Int
-  companyName      String
-  applicationEmail String?
-  applicationUrl   String?
-  companyLogoUrl   String?
-  approved         Boolean  @default(false)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+model Post {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  title       String
+  description String
+  authorName  String?
+  approved    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  @@map("jobs")
+  @@map("posts")
 }
+
+// id, slug, title, description, createdAt, companyName to author, short description, 
